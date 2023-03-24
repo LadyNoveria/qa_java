@@ -14,39 +14,43 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LionAlexTest {
-    @Spy
     private LionAlex lionAlex;
+    @Spy
+    private Feline feline;
     @Mock
     private Animal animal;
 
     @Test
-    public void getKittensTest() {
+    public void getKittensTest() throws Exception {
+        lionAlex = new LionAlex(feline);
         int actual = lionAlex.getKittens();
         assertEquals(0, actual);
     }
 
     @Test
-    public void getFriendsTest() {
+    public void getFriendsTest() throws Exception {
+        lionAlex = new LionAlex(feline);
         List<String> actual = lionAlex.getFriends();
         assertEquals(List.of("Марти", "Глория", "Мелман"), actual);
     }
 
     @Test
-    public void getPlaceOfLivingTest() {
+    public void getPlaceOfLivingTest() throws Exception {
+        lionAlex = new LionAlex(feline);
         String actual = lionAlex.getPlaceOfLiving();
         assertEquals("Нью-Йоркский зоопарк", actual);
     }
 
     @Test
     public void doesHaveManeTest() throws Exception {
-        Lion lionAlex = new LionAlex();
+        lionAlex = new LionAlex(feline);
         boolean actual = lionAlex.doesHaveMane();
         assertTrue(actual);
     }
 
     @Test
     public void getFoodTest() throws Exception {
-        Lion lionAlex = new LionAlex(new Feline());
+        lionAlex = new LionAlex(feline);
         List<String> actual = lionAlex.getFood();
         Mockito.when(animal.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
         assertEquals(animal.getFood("Хищник"), actual);
